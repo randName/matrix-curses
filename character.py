@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from curses import color_pair
+from curses import color_pair, error
 from random import randrange as rr
 
 class MatrixChar(object):
@@ -26,7 +26,10 @@ class MatrixChar(object):
 
     def put(self, hlight=False):
         self.attr = color_pair(2 if hlight else 1)
-        self.__class__.scr.put(self)
+        try:
+            self.__class__.scr.put(self)
+        except error:
+            self.update(reset=True)
 
 
 class BlankChar(MatrixChar):
